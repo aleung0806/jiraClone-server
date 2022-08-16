@@ -1,11 +1,7 @@
-const genericRepo = require('./generic')
 const db = require('../db/db')
 const { makeNested } = require('./makeNested')
 
-
-let projectRepo = genericRepo('project')
-
-projectRepo.getAll = async () => {
+const getAllProjects = async () => {
   let projects = await db
     .select('project.id as projectId', 'project.title as projectTitle', 'list.id as listId', 'list.title as listTitle', 'issue.*')
     .from('project')
@@ -17,7 +13,7 @@ projectRepo.getAll = async () => {
   return makeNested('projects', projects)
 }
 
-projectRepo.get = async (projectId) => {
+const getProjectById = async (projectId) => {
   let project = await db
     .select('project.id as projectId', 'project.title as projectTitle', 'list.id as listId', 'list.title as listTitle', 'issue.*')
     .from('project')
@@ -30,4 +26,35 @@ projectRepo.get = async (projectId) => {
   return makeNested('project', project)
 }
 
-module.exports = projectRepo
+const createProject = async (project) => {
+  let updatedProject = await db('project')
+    .insert(project)
+    .returning('*')
+
+  return updatedProject
+}
+const updateProject = async (projectId, project) => {
+  let updatedProject = await db('project')
+    .where('projectId', projectId)
+    .update(project)
+    .returning('*')
+
+  return updatedProject
+}
+
+const deleteProject = async (projectId, project) => {
+  await db('project')
+    .where('projectId', projectId)
+    .del()
+
+  return 
+}
+
+module.exports = {
+  getAllProjects,
+  getProjectById,
+  createProject,
+  updateProject,
+  deleteProject
+
+}

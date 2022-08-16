@@ -143,25 +143,26 @@ exports.seed = function(knex) {
 
 
       await knex('user').insert(makeUsers())
-      const u = await knex('user').select('userId')
-      userIds = u.map(user => user.userId)
+      const u = await knex('user').select('id')
+      userIds = u.map(user => user.id)
       console.log('users added successfully', userIds)
 
       await knex('project').insert(projects)
-      const p = await knex('project').select('projectId')
-      projectIds = p.map(project => project.projectId)
+      const p = await knex('project').select('id')
+      console.log(p)
+      projectIds = p.map(project => project.id)
 
       console.log('projects added successfully', projectIds)
 
       await knex('list').insert(makeLists())
-      const l = await knex('list').select('listId')
-      listIds = l.map(list => list.listId)
+      const l = await knex('list').select('id')
+      listIds = l.map(list => list.id)
 
       console.log('lists added successfully', listIds)
 
       await knex('issue').insert(makeIssues())
-      const i = await knex('issue').select('issueId')
-      issueIds = i.map(issue => issue.issueId)
+      const i = await knex('issue').select('id')
+      issueIds = i.map(issue => issue.id)
       console.log('issues added successfully', issueIds)
       
       resolve()

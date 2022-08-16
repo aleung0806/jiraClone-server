@@ -13,7 +13,7 @@ exports.up = function(knex) {
         await knex.raw(onUpdateProcedure)
         await knex.schema
           .createTable('project', table => {
-            table.increments('projectId').primary()
+            table.increments('id').primary()
             table.string('title').notNullable()
             table.timestamps(true, true)
           })
@@ -22,47 +22,47 @@ exports.up = function(knex) {
 
         await knex.schema
         .createTable('user', table => {
-          table.increments('userId').primary()
+          table.increments('id').primary()
           table.string('email').notNullable().unique()
           table.string('first_name').notNullable()
           table.string('last_name')
           table.timestamps(true, true)
         })
-        await knex.raw(onUpdateTrigger('project'))
+        //await knex.raw(onUpdateTrigger('user'))
         console.log('user added successfully')
 
         await knex.schema
         .createTable('list', table => {
-          table.increments('listId').primary()
+          table.increments('id').primary()
           table.string('title').notNullable()
-          table.integer('projectId')
-          table.foreign('projectId').references('project.projectId')
+          table.integer('projectId').notNullable()
+          table.foreign('projectId').references('project.id')
           table.timestamps(true, true)
         })
-        await knex.raw(onUpdateTrigger('project'))
+        await knex.raw(onUpdateTrigger('list'))
         console.log('list added successfully')
 
         await knex.schema
         .createTable('issue', table => {
-          table.increments('issueId').primary()
+          table.increments('id').primary()
           table.string('title').notNullable()
           table.integer('index').notNullable()
-          table.integer('listId')
-          table.foreign('listId').references('list.listId')
-          table.integer('projectId')
-          table.foreign('projectId').references('project.projectId')
+          table.integer('listId').notNullable()
+          table.foreign('listId').references('list.id')
+          table.integer('projectId').notNullable()
+          table.foreign('projectId').references('project.id')
           table.string('description')
           table.string('type')
           table.string('status')
           table.string('priority')
           table.date('date_due')
           table.integer('assigneeId')
-          table.foreign('assigneeId').references('user.userId')
+          table.foreign('assigneeId').references('user.id')
           table.integer('creatorId')
-          table.foreign('creatorId').references('user.userId')
+          table.foreign('creatorId').references('user.id')
           table.timestamps(true, true)
         })
-        await knex.raw(onUpdateTrigger('project'))
+        await knex.raw(onUpdateTrigger('issue'))
         console.log('issue added successfully')
         resolve()
         

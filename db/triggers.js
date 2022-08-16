@@ -9,7 +9,7 @@ const onUpdateProcedure = `
   END;
   $$ language 'plpgsql';
   `
-const dropOnUpdateProcedure = '`DROP FUNCTION on_update_timestamp`'
+const dropOnUpdateProcedure = `DROP FUNCTION on_update_timestamp`
 
 const onUpdateTrigger =  (table) => {
   return `

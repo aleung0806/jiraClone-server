@@ -1,6 +1,5 @@
 const projectRepository  = require('../repository/project')
 
-
 const getAllProjects = async (req, res, next) => {
   try{
     const projects = await projectRepository.getAllProjects()
@@ -50,7 +49,6 @@ const deleteProject = async (req, res, next) => {
     next(err)
   }
 }
-
 
 module.exports = {
   getAllProjects,

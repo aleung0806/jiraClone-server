@@ -24,7 +24,7 @@ const errorHandler = (error, request, response, next) => {
       error: 'invalid token'
     })
   } else {
-    return response.status(400).json({ error: 'there was an error'})
+    return response.status(400)
   }
 
   next(error)
