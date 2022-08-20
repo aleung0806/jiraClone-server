@@ -3,7 +3,11 @@ const genericController = (repo) => {
   const getAll = async (req, res, next) => {
     try{
       const elements = await repo.getAll()
-      res.status(200).json(elements)
+      if (elements.length === 0){
+        next('not found')
+      }else{
+        res.status(200).json(elements)
+      }
     }catch(err){
       next(err)
     }
@@ -13,7 +17,11 @@ const genericController = (repo) => {
     const id = req.params.id
     try{
       const element = await repo.get(id)
-      res.status(200).json(element)
+      if (element.length === 0){
+        next('not found')
+      }else{
+        res.status(200).json(element)
+      }
     }catch(err){
       next(err)
     }
@@ -44,7 +52,7 @@ const genericController = (repo) => {
     const id = req.params.id
     try{
       await repo.remove(id)
-      res.status(200)
+      res.sendStatus(200)
     }catch(err){
       next(err)
     }

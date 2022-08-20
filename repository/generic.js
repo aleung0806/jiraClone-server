@@ -1,8 +1,10 @@
 const db = require('../db/db')
 
 const genericRepo = (elementName) => {  
+
   const getAll = async () => {
-    let elements = await db
+    console.log(`${elementName} repo getAll`)
+    const elements = await db
       .select('*')
       .from(elementName)
 
@@ -10,7 +12,8 @@ const genericRepo = (elementName) => {
   }
 
   const get = async (id) => {
-    let element = await db
+    console.log(`${elementName} repo get ${id}`)
+    const element = await db
       .select('*')
       .from(elementName)
       .where('id', id)
@@ -19,14 +22,17 @@ const genericRepo = (elementName) => {
   }
 
   const create = async (element) => {
-    let newElement = await db(elementName)
+    console.log(`${elementName} repo create ${element}`)
+    const newElement = await db(elementName)
       .insert(element)
       .returning('*')
 
     return newElement
   }
   const update = async (id, element) => {
-    let updatedElement = await db(elementName)
+    console.log(`${elementName} repo update ${element}`)
+
+    const updatedElement = await db(elementName)
       .where('id', id)
       .update(element)
       .returning('*')
@@ -35,12 +41,17 @@ const genericRepo = (elementName) => {
   }
 
   const remove = async (id) => {
-    console.log('repo', elementName)
-    await db(elementName)
-      .where('id', id)
-      .del()
+    console.log(`${elementName} repo remove ${id}`)
+    try {
+      await db(elementName)
+        .where('id', id)
+        .del()
+      console.log('delete success')
+    }catch (err){
+      console.log(err)
+    }
 
-    return 
+    return
   }
 
   return {

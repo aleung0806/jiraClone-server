@@ -1,11 +1,26 @@
 const genericRouter = require('./generic')
-const listController = require('../controller/list')
 
+const { 
+  projectController,
+  listController,
+  issueController,
+  roleController,
+  
+} = require('../controller/controllers')
+
+
+const userController = require('../controller/user')
+
+const projectRouter = genericRouter(projectController)
 const listRouter = genericRouter(listController)
+const issueRouter = genericRouter(issueController)
+const userRouter = genericRouter(userController)
+const roleRouter = genericRouter(roleController)
 
 module.exports = {
-  userRouter,
   projectRouter,
   listRouter,
-  issueRouter 
+  issueRouter,
+  userRouter,
+  roleRouter,
 }

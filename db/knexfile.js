@@ -1,11 +1,13 @@
 // Update with your config settings.
 
+const knexStringcase = require("knex-stringcase")
+
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
 module.exports = {
 
-  development: {
+  development: knexStringcase({
     client: 'postgresql',
     connection: {
       database: 'bugtracker',
@@ -22,7 +24,7 @@ module.exports = {
     seeds: {
       directory: './seeds'
     }
-  },
+  }),
 
   production: {
     client: 'postgresql',

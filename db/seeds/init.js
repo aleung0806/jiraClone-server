@@ -7,17 +7,22 @@ exports.seed = function(knex) {
     {
       firstName: 'Albert',
       lastName: 'Leung',
-      email: 'albert@leung.com'
+      email: 'albert@leung.com',
+      passwordHash: 'ghjdghjdghdf'
     },
     {
       firstName: 'Shelby',
       lastName: 'Tinaza',
-      email: 'shelby@tinaza.com'
+      email: 'shelby@tinaza.com',
+      passwordHash: 'asdfadsfa'
+
     },
     {
       firstName: 'Grinchie',
       lastName: 'Tinaza',
-      email: 'grinchie@tinaza.com'
+      email: 'grinchie@tinaza.com',
+      passwordHash: 'ytuertyety'
+
     }
   ]
 
@@ -92,6 +97,7 @@ exports.seed = function(knex) {
       return {
         first_name: user.firstName,
         last_name: user.lastName,
+        password_hash: user.passwordHash,
         email: user.email
       }
     })
@@ -136,8 +142,8 @@ exports.seed = function(knex) {
 
   return new Promise(async (resolve, reject) => {
     try {
-      await knex('issue').del()
-      await knex('list').del()
+      // await knex('issue').del()
+      // await knex('list').del()
       await knex('project').del()
       await knex('user').del()
 
