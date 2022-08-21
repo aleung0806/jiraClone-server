@@ -1,23 +1,19 @@
 const genericController = require('./generic')
 
-const projectRepo = require('../repository/project')
-const listRepo = require('../repository/list')
-const issueRepo = require('../repository/issue')
-const roleRepo = require('../repository/role')
+// const projectService = require('../service/project')
+// const listRepo = require('../service/list')
+const issueRepo = require('../service/issue')
+// const roleRepo = require('../service/role')
 
-
-const projectController = genericController(projectRepo)
-const listController = genericController(listRepo)
+// const projectController = genericController(projectRepo)
+// const listController = genericController(listRepo)
 const issueController = genericController(issueRepo)
-
-const userController = genericController(userRepo)
-const roleController = genericController(roleRepo)
+// const roleController = genericController(roleRepo)
 
 
 module.exports = {
-  projectController,
-  listController,
+  // projectController,
+  // listController,
   issueController,
-  userController,
-  roleController
+  // roleController
 }

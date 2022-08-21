@@ -1,9 +1,10 @@
-const authService = require('../services/auth')
+const authService = require('../service/auth')
 
   const register = async (req, res, next) => {
     const { firstName, lastName, email, password } = req.body
     try{
       const user = await authService.register(firstName, lastName, email, password)
+      console.log(user)
       res.status(201).json({id: user.id, email, firstName, lastName})
     }catch(err){
       next(err)
@@ -20,6 +21,8 @@ const authService = require('../services/auth')
       req.session.regenerate((err) => {
         if (err) next(err)
         req.session.email = user.email
+        req.session.userId = user.id
+
         req.session.save((err) => {
           if (err) next(err)
           console.log(`${req.session.email} session saved`)

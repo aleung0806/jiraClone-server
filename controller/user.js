@@ -1,9 +1,12 @@
-const userRepository  = require('../repository/user')
+const genericController = require('./generic')
+const userRepo  = require('../repository/user')
 const bcrypt = require('bcrypt')
 
-const createUser = async (req, res, next) => {
+
+let userController = genericController(userRepo)
+
+userController.create = async (req, res, next) => {
   const { firstName, lastName, email, password } = req.body
-  console.log('creating user')
   try{
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(password, saltRounds)
@@ -17,6 +20,4 @@ const createUser = async (req, res, next) => {
 
 
 
-module.exports = {
-  createUser
-}
+module.exports = userController

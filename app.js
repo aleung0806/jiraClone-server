@@ -6,15 +6,9 @@ const unknownEndpoint = require('./utils/middleware/unknownEndpoint')
 const errorHandler= require('./utils/middleware/errorHandler')
 const authenticate = require("./utils/middleware/authenticate")
 
-const { 
-  userRouter, 
-  roleRouter, 
-  projectRouter, 
-  listRouter, 
-  issueRouter
- } = require('./routes/routes')
-
- const authRouter = require('./routes/auth')
+const issueRouter = require('./routes/issue')
+const roleRouter = require('./routes/role')
+const authRouter = require('./routes/auth')
 
 
 const session = require('express-session')
@@ -77,11 +71,11 @@ app.use('/auth', authRouter)
 
 app.use(authenticate)
 
-app.use('./user', userRouter)
-app.use('./role', roleRouter)
+// app.use('/user', userRouter)
+app.use('/role', roleRouter)
 
-app.use('/project', projectRouter)
-app.use('/list', listRouter)
+// app.use('/project', projectRouter)
+// app.use('/list', listRouter)
 app.use('/issue', issueRouter)
 
 

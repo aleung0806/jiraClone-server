@@ -142,10 +142,11 @@ exports.seed = function(knex) {
 
   return new Promise(async (resolve, reject) => {
     try {
-      // await knex('issue').del()
-      // await knex('list').del()
+      await knex('issue').del()
+      await knex('list').del()
       await knex('project').del()
       await knex('user').del()
+      await knex('role').del()
 
 
       await knex('user').insert(makeUsers())

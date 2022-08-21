@@ -19,6 +19,7 @@ exports.up = function(knex) {
         table.string('role').notNullable()
         table.timestamps(true, true)
       })
+
       resolve()
       
     } catch(err){

@@ -1,6 +1,15 @@
 const genericRepo = require('./generic')
-const db = require('../db/db')
 
-const listRepo = genericRepo('list')
+const listRepo = () => {
+
+  let repo = genericRepo('list', config)
+
+  repo.getAllByProjectId = async () => {
+ 
+  }
+
+
+  return repo
+}
 
 module.exports = listRepo
