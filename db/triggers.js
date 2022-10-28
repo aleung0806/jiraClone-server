@@ -19,6 +19,7 @@ const onUpdateTrigger =  (table) => {
       EXECUTE PROCEDURE on_update_timestamp()`
 }
 
+
 module.exports = {
   onUpdateProcedure,
   dropOnUpdateProcedure,

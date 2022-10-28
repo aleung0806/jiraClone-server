@@ -17,6 +17,7 @@ exports.up = function(knex) {
           .onUpdate('CASCADE')
           .onDelete('CASCADE')
         table.string('role').notNullable()
+        table.unique(['user_id, project_id'])
         table.timestamps(true, true)
       })
 

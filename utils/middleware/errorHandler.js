@@ -9,6 +9,8 @@ const errorHandler = (error, request, response, next) => {
     return response.sendStatus(404)
   }else if (error === 'you are not logged in') {
     return response.sendStatus(401)
+  }else if (error === 'permission denied') {
+    return response.sendStatus(400)
   }
   // if (error.name === 'CastError') {
   //   return response.status(400).send({ error: 'malformatted id' })

@@ -6,14 +6,17 @@ const unknownEndpoint = require('./utils/middleware/unknownEndpoint')
 const errorHandler= require('./utils/middleware/errorHandler')
 const authenticate = require("./utils/middleware/authenticate")
 
-const issueRouter = require('./routes/issue')
-const roleRouter = require('./routes/role')
-const authRouter = require('./routes/auth')
+const authRouter = require('./route/auth')
+
+const userRouter = require('./route/user')
+const projectRouter = require('./route/project')
+const roleRouter = require('./route/role')
+const listRouter = require('./route/list')
+const issueRouter = require('./route/issue')
 
 
 const session = require('express-session')
 const redisStore = require('connect-redis')(session)
-
 
 const redisClient = redis.createClient({
   host: 'localhost',
@@ -34,7 +37,6 @@ const store = new redisStore({client: redisClient})
 
 const app = express()
 app.use(express.json())
-app.use(requestLogger)
 
 app.use(session({
       store: store,
@@ -50,32 +52,17 @@ app.use(session({
       },
     })
 )
-app.use('/clear', async (req, res, next) => {
-  console.log('testing')
-  store.clear((error) => {
-    console.log('sessions cleared')
-    res.sendStatus(200)
-  })
-  
-})
-app.use('/show', async (req, res, next) => {
-  console.log('testing')
-  store.all((error, sessions) => {
-    console.log('all sessions', sessions)
-    res.sendStatus(200)
 
-  })
-  
-})
+app.use(requestLogger)
+
 app.use('/auth', authRouter)
 
 app.use(authenticate)
 
-// app.use('/user', userRouter)
+app.use('/user', userRouter)
+app.use('/project', projectRouter)
 app.use('/role', roleRouter)
-
-// app.use('/project', projectRouter)
-// app.use('/list', listRouter)
+app.use('/list', listRouter)
 app.use('/issue', issueRouter)
 
 

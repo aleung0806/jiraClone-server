@@ -1,23 +1,67 @@
-const genericController = require('./generic')
-const userRepo  = require('../repository/user')
-const bcrypt = require('bcrypt')
+const service  = require('../service/user')
 
+const get = async (req, res, next) => {
+  const id = req.params.id
+  console.log(`request for ${id}`)
 
-let userController = genericController(userRepo)
+  if (req.session.userId != id){
+    return  res.status(401).send('permission denied')
+  }
 
-userController.create = async (req, res, next) => {
-  const { firstName, lastName, email, password } = req.body
   try{
-    const saltRounds = 10
-    const passwordHash = await bcrypt.hash(password, saltRounds)
-
-    const id = await userRepository.createUser( firstName, lastName, email, passwordHash)
-    res.status(201).json(id)
+    const element = await service.get(id, req.session.id)
+    res.status(200).json(element)
   }catch(err){
     next(err)
   }
 }
 
+const update = async (req, res, next) => {
+  const id = req.params.id
+  const element = req.body
+  const sessionId = req.session.userId
+  console.log(`element update ${id} ${sessionId} with ${JSON.stringify(element)}`)
+
+  if (sessionId != id){
+    res.status(401).send('permission denied')
+    return 
+  }
+
+  if (element.id || element.email){
+    res.status(400).send('cannot change userId or email')
+  }
+
+  try{
+    const updatedElement = await service.update(id, element)
+    res.status(200).json(updatedElement)
+  }catch(err){
+    next(err)
+  }
+}
+
+const remove = async (req, res, next) => {
+  const id = req.params.id
+  const { userId, email }= req.session
+  console.log(`element remove ${id} by ${email} (id ${userId})`)
+
+  if (req.session.userId != id){
+    res.status(401).send('permission denied')
+    return 
+  }
+
+  try{
+    await service.remove(id)
+    req.session.destroy(err => next(err))
+    res.status(200).send('user deleted')
+  }catch(err){
+    next(err)
+  }
 
 
-module.exports = userController
+}
+
+module.exports =  {
+  get,
+  update,
+  remove
+}

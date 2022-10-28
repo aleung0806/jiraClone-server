@@ -1,10 +1,9 @@
-const repo = require('../repository/list')
+const repo = require('../repository/role')
  
 
 const create = async (element) => {
   return await repo.create(element)
 }
-
 
 const update = async (id, element) => {
     return await repo.update(id, element)

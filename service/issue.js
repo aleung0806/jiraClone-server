@@ -1,18 +1,25 @@
-const issueRepo = require('../repository/issue')
-const genericService = require('./generic')
+const repo = require('../repository/issue')
+ 
 
-const issueService = () => {
-
-  const permissions = {
-    create: 'member',
-    getAllByProjectId: 'member',
-    update: 'member',
-    delete: 'member'
-  }
-
-  const service =  genericService(issueRepo, permissions)
-  
-  return service
+const create = async (element) => {
+  return await repo.create(element)
 }
 
-module.exports = issueService()
+const get = async (id) => {
+  return await repo.get(id)
+}
+
+const update = async (id, element) => {
+    return await repo.update(id, element)
+}
+
+const remove = async (id) => {
+    return await repo.remove(id)
+}
+
+module.exports = {
+  create,
+  get,
+  update,
+  remove
+}

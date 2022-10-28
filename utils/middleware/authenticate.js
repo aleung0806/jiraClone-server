@@ -1,11 +1,12 @@
 const logger = require('../logger')
 
 const authenticate = (req, res, next) => {
-  if (req.session.userId){
+  if (req.path.includes('/auth')){
+    return
+  } else if (req.session.userId){
     next()
-  }
-  else {
-    next('you are not logged in')
+  }else {
+    res.status(401).send('you are not logged in')
   }
 }
 

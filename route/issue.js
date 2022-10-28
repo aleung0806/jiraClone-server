@@ -1,9 +1,9 @@
 const express = require('express')
 const issueController = require('../controller/issue')
-let issueRouter = express.Router()
+const issueRouter = express.Router()
 
 issueRouter.post('/', issueController.create)
-issueRouter.get('/getAllByProjectId/:projectId', issueController.getAllByProjectId)
+issueRouter.get('/:id', issueController.get)
 issueRouter.put('/:id', issueController.update)
 issueRouter.delete('/:id', issueController.remove)
 

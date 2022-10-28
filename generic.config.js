@@ -28,13 +28,11 @@ const config = {
   list: {
     create: 'member',
     update: 'member',
-    getAllByProjectId: 'member',
     remove: 'member'
   },
   issue: {
     create: 'member',
     update: 'member',
-    getAllByProjectId: 'member',
     remove: 'member'
   }
 }
